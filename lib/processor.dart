@@ -21,19 +21,20 @@ class Processor {
 
   static StreamSubscription listen(Function handler) => _stream.listen(handler);
   static void refresh() {
-	  //_calculate();
-	  _fire(_output);
+    _fire(_output);
   }
 
   static void calculate() => _calculate();
 
   static void _fire(String data) {
     _resultsModel.display = _output;
-	_resultsModel.results = _results;
-	print("Got" + _output);
+    _resultsModel.results = _results;
   }
 
-  static set resultsModel(ResultsModel rm) {_resultsModel = rm; }
+  static set resultsModel(ResultsModel rm) {
+    _resultsModel = rm;
+  }
+
   static String get _output => _result == null ? _equation : _result;
   //static Map<int, double> get _results => _results;
 
@@ -50,7 +51,7 @@ class Processor {
       case KeyType.DECIMAL:
       case KeyType.FUNCTION:
       case KeyType.CLEAR:
-        return handleFunction(key);
+        return handleFunction(key, event);
 
       case KeyType.OPERATOR:
         return handleOperator(key);
@@ -61,7 +62,7 @@ class Processor {
     }
   }
 
-  static void handleFunction(CalculatorKey key) {
+  static void handleFunction(CalculatorKey key, KeyEvent keyEvent) {
     if (_valA == '0') {
       return;
     }
@@ -70,7 +71,7 @@ class Processor {
     }
 
     Map<KeySymbol, dynamic> table = {
-      Keys.clear: () => _clear(),
+      Keys.clear: () => _clear(key, keyEvent),
       Keys.decimal: () => _decimal(),
       Keys.rms: () => _rms(),
       Keys.voltage: () => _voltage()
@@ -102,10 +103,14 @@ class Processor {
     refresh();
   }
 
-  static void _clear() {
-    _valA = _valB = '0';
-    _operator = _result = null;
-	_results.clear();
+  static void _clear(CalculatorKey key, KeyEvent keyEvent) {
+    if (!keyEvent.isLongPressed && _valA != "0") {
+		_valA = _valA.substring(0, _valA.length - 1);
+    } else {
+      _valA = _valB = '0';
+      _operator = _result = null;
+      _results.clear();
+    }
   }
 
   static void _rms() {
@@ -129,8 +134,8 @@ class Processor {
       return;
     }
 
-	// Clear the results map.
-	_results.clear();
+    // Clear the results map.
+    _results.clear();
 
     // If calculating from RMS voltages...
     if (_isRMS) {
@@ -150,8 +155,7 @@ class Processor {
         });
       } else {
         impedances.forEach((e) {
-          _results.putIfAbsent(
-              e, () => _findPeakFromP(double.parse(_valA), e));
+          _results.putIfAbsent(e, () => _findPeakFromP(double.parse(_valA), e));
         });
       }
     }

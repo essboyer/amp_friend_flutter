@@ -3,8 +3,10 @@ import 'package:amp_friend_flutter/key-controller.dart';
 import 'package:amp_friend_flutter/key-symbol.dart';
 
 abstract class Keys {
-  static KeySymbol rms = KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
-  static KeySymbol voltage = KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
+  static KeySymbol rms =
+      KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
+  static KeySymbol voltage =
+      KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
 
   static KeySymbol clear = KeySymbol('Del', keyType: KeyType.CLEAR);
   static KeySymbol decimal = KeySymbol('.', keyType: KeyType.DECIMAL);
@@ -35,12 +37,12 @@ class CalculatorKey extends StatefulWidget {
 
 class CalculatorKeyState extends State<CalculatorKey> {
   bool toggled = false;
-  bool _isLongPressed = false;
+  bool isLongPressed = false;
 
   dynamic _fire(CalculatorKeyState key) {
-	  KeyEvent ke = KeyEvent(widget);
-	  ke.isLongPressed = _isLongPressed;
-	  KeyController.fire(ke);
+    KeyEvent ke = KeyEvent(widget);
+    ke.isLongPressed = isLongPressed;
+    KeyController.fire(ke);
   }
 
   Color get color {
@@ -48,9 +50,9 @@ class CalculatorKeyState extends State<CalculatorKey> {
       case KeyType.CLEAR:
         return Colors.red;
       case KeyType.FUNCTION:
-	  	if (toggled) {
-		  return Colors.blue;
-		}
+        if (toggled) {
+          return Colors.blue;
+        }
         return Colors.green;
 
       case KeyType.INTEGER:
@@ -60,7 +62,9 @@ class CalculatorKeyState extends State<CalculatorKey> {
   }
 
   String get label {
-	  return (widget.symbol.keyType == KeyType.FUNCTION && toggled ? widget.symbol.altText : widget.symbol.value);
+    return (widget.symbol.keyType == KeyType.FUNCTION && toggled
+        ? widget.symbol.altText
+        : widget.symbol.value);
   }
 
   @override
@@ -80,20 +84,24 @@ class CalculatorKeyState extends State<CalculatorKey> {
             elevation: 4,
             child: Text(label, style: style),
             onPressed: () {
+              if (widget.symbol.keyType == KeyType.CLEAR) {
+                isLongPressed = false;
+              }
+
               if (widget.symbol.keyType == KeyType.FUNCTION) {
-				  setState((){
-					  toggled = !toggled;
-				  });
-			  }
+                setState(() {
+                  toggled = !toggled;
+                });
+              }
 
               return _fire(this);
             },
-			onLongPress: () {
+            onLongPress: () {
               if (widget.symbol.keyType == KeyType.CLEAR) {
-				  setState((){
-					  _isLongPressed = true;
-				  });
-			  }
+                setState(() {
+                  isLongPressed = true;
+                });
+              }
 
               return _fire(this);
             }));
