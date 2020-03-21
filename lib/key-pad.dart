@@ -12,9 +12,8 @@ class KeyPad extends StatelessWidget {
 				Row(
 					children: <Widget>[
 						CalculatorKey(symbol: Keys.clear),
-						CalculatorKey(symbol: Keys.sign),
-						CalculatorKey(symbol: Keys.percent),
-						CalculatorKey(symbol: Keys.divide),
+						CalculatorKey(symbol: Keys.rms),
+						CalculatorKey(symbol: Keys.voltage),
 					]
 				),
 				Row(
@@ -22,7 +21,6 @@ class KeyPad extends StatelessWidget {
 						CalculatorKey(symbol: Keys.seven),
 						CalculatorKey(symbol: Keys.eight),
 						CalculatorKey(symbol: Keys.nine),
-						CalculatorKey(symbol: Keys.multiply),
 					]
 				),
 				Row(
@@ -30,7 +28,6 @@ class KeyPad extends StatelessWidget {
 						CalculatorKey(symbol: Keys.four),
 						CalculatorKey(symbol: Keys.five),
 						CalculatorKey(symbol: Keys.six),
-						CalculatorKey(symbol: Keys.subtract),
 					]
 				),
 				Row(
@@ -38,17 +35,15 @@ class KeyPad extends StatelessWidget {
 						CalculatorKey(symbol: Keys.one),
 						CalculatorKey(symbol: Keys.two),
 						CalculatorKey(symbol: Keys.three),
-						CalculatorKey(symbol: Keys.add),
 					]
 				),
 				Row(
 					children: <Widget>[
 						CalculatorKey(symbol: Keys.zero),
 						CalculatorKey(symbol: Keys.decimal),
-						CalculatorKey(symbol: Keys.equals),
 					]
 				)
-			]
+			],
 		);
 	}
 }

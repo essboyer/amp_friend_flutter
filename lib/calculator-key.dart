@@ -3,71 +3,84 @@ import 'package:flutter_calculator_demo/key-controller.dart';
 import 'package:flutter_calculator_demo/key-symbol.dart';
 
 abstract class Keys {
+  static KeySymbol rms = KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
+  static KeySymbol voltage = KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
 
-	static KeySymbol clear = const KeySymbol('C');
-	static KeySymbol sign = const KeySymbol('±');
-	static KeySymbol percent = const KeySymbol('%');
-	static KeySymbol divide = const KeySymbol('÷');
-	static KeySymbol multiply = const KeySymbol('x');
-	static KeySymbol subtract = const KeySymbol('-');
-	static KeySymbol add = const KeySymbol('+');
-	static KeySymbol equals = const KeySymbol('=');
-	static KeySymbol decimal = const KeySymbol('.');
+  static KeySymbol clear = KeySymbol('C', keyType: KeyType.CLEAR);
+  static KeySymbol decimal = KeySymbol('.', keyType: KeyType.DECIMAL);
 
-	static KeySymbol zero = const KeySymbol('0');
-	static KeySymbol one = const KeySymbol('1');
-	static KeySymbol two = const KeySymbol('2');
-	static KeySymbol three = const KeySymbol('3');
-	static KeySymbol four = const KeySymbol('4');
-	static KeySymbol five = const KeySymbol('5');
-	static KeySymbol six = const KeySymbol('6');
-	static KeySymbol seven = const KeySymbol('7');
-	static KeySymbol eight = const KeySymbol('8');
-	static KeySymbol nine = const KeySymbol('9');
+  static KeySymbol zero = KeySymbol('0');
+
+  static KeySymbol one = KeySymbol('1');
+  static KeySymbol two = KeySymbol('2');
+  static KeySymbol three = KeySymbol('3');
+
+  static KeySymbol four = KeySymbol('4');
+  static KeySymbol five = KeySymbol('5');
+  static KeySymbol six = KeySymbol('6');
+
+  static KeySymbol seven = KeySymbol('7');
+  static KeySymbol eight = KeySymbol('8');
+  static KeySymbol nine = KeySymbol('9');
 }
 
-class CalculatorKey extends StatelessWidget {
+class CalculatorKey extends StatefulWidget {
+  CalculatorKey({this.symbol});
 
-	CalculatorKey({ this.symbol });
+  final KeySymbol symbol;
 
-	final KeySymbol symbol;
-	
-	Color get color {
+  @override
+  CalculatorKeyState createState() => CalculatorKeyState();
+}
 
-		switch (symbol.type) {
+class CalculatorKeyState extends State<CalculatorKey> {
+  bool toggled = false;
 
-			case KeyType.FUNCTION:
-				return Color.fromARGB(255, 96, 96, 96);
-
-			case KeyType.OPERATOR:
-				return Color.fromARGB(255, 32, 96, 128);
-
-			case KeyType.INTEGER:
-			default:
-				return Color.fromARGB(255, 128, 128, 128);
+  dynamic _fire(CalculatorKeyState key) => KeyController.fire(KeyEvent(widget));
+  Color get color {
+    switch (widget.symbol.keyType) {
+      case KeyType.CLEAR:
+        return Colors.red;
+      case KeyType.FUNCTION:
+	  	if (toggled) {
+		  return Color.fromARGB(255, 96, 96, 96);
 		}
-	}
+        return Colors.green;
 
-	static dynamic _fire(CalculatorKey key) => KeyController.fire(KeyEvent(key));
+      case KeyType.INTEGER:
+      default:
+        return Color.fromARGB(255, 128, 128, 128);
+    }
+  }
 
-	@override
-	Widget build(BuildContext context) {
+  String get label {
+	  return (widget.symbol.keyType == KeyType.FUNCTION && toggled ? widget.symbol.altText : widget.symbol.value);
+  }
 
-		double size = MediaQuery.of(context).size.width / 4;
-		TextStyle style = Theme.of(context).textTheme.display1.copyWith(color: Colors.white);
+  @override
+  Widget build(BuildContext context) {
+    double size = (MediaQuery.of(context).size.width) / 3;
+    TextStyle style =
+        Theme.of(context).textTheme.headline4.copyWith(color: Colors.white);
 
-		return Container(
-			
-			width: (symbol == Keys.zero) ? (size * 2) : size,
-			padding: EdgeInsets.all(2),
-			height: size,
-			child: RaisedButton(
-				shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-				color: color,
-				elevation: 4,
-				child: Text(symbol.value, style: style),
-				onPressed: () => _fire(this),
-			)
-		);
-	}
+    return Container(
+        width: (widget.symbol == Keys.zero) ? (size * 2) : size,
+        padding: EdgeInsets.all(20),
+        height: size - 10,
+        child: RaisedButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            color: color,
+            elevation: 4,
+            child: Text(label, style: style),
+            onPressed: () {
+              if (widget.symbol.keyType == KeyType.FUNCTION) {
+				  setState((){
+					  toggled = !toggled;
+				  });
+			  }
+
+              return _fire(this);
+            }));
+  }
 }

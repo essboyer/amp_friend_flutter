@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_calculator_demo/calculator.dart';
 
 void main() async {
-	await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+	//await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 	runApp(CalculatorApp());
 }
 

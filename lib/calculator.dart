@@ -15,10 +15,10 @@ class Calculator extends StatefulWidget {
 class _CalculatorState extends State<Calculator> {
 
 	String _output;
+	Map<int, double> _results = {};
 
 	@override
 	void initState() {
-		
 		KeyController.listen((event) => Processor.process(event));
 		Processor.listen((data) => setState(() { _output = data; }));
 		Processor.refresh();
@@ -27,7 +27,6 @@ class _CalculatorState extends State<Calculator> {
 
 	@override
 	void dispose() {
-
 		KeyController.dispose();
 		Processor.dispose();
 		super.dispose();
@@ -38,17 +37,14 @@ class _CalculatorState extends State<Calculator> {
 
 		Size screen = MediaQuery.of(context).size;
 
-		double buttonSize = screen.width / 4;
-		double displayHeight = screen.height - (buttonSize * 5) - (buttonSize);
+		double buttonSize = screen.width / 6;
+		double displayHeight = buttonSize * 1.6;//screen.height - (buttonSize * 6);
 	
 		return Scaffold(
 			backgroundColor: Color.fromARGB(196, 32, 64, 96),
-			body: Column(
-				
-				mainAxisAlignment: MainAxisAlignment.center,
+			body: Column(mainAxisAlignment: MainAxisAlignment.center,
 				children: <Widget>[
-
-					Display(value: _output, height: displayHeight),
+					Display(value: _output, height: displayHeight, results: _results),
 					KeyPad()
 				]
 			),
