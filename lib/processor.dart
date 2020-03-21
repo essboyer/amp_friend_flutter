@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter_calculator_demo/calculator-key.dart';
-import 'package:flutter_calculator_demo/key-controller.dart';
-import 'package:flutter_calculator_demo/key-symbol.dart';
+import 'package:amp_friend_flutter/calculator-key.dart';
+import 'package:amp_friend_flutter/key-controller.dart';
+import 'package:amp_friend_flutter/key-symbol.dart';
+import 'package:amp_friend_flutter/results-model.dart';
 
-class Processor extends ChangeNotifier {
+class Processor {
   static KeySymbol _operator;
   static String _valA = '0';
   static String _valB = '0';
@@ -12,22 +13,27 @@ class Processor extends ChangeNotifier {
   static bool _isRMS = true;
   static bool _isVoltage = true;
   static List<int> impedances = [2, 4, 8, 16];
-  static Map<int, double> _results;
+  static ResultsModel _resultsModel = ResultsModel();
+  static Map<int, double> _results = {};
 
   static StreamController _controller = StreamController();
   static Stream get _stream => _controller.stream;
 
   static StreamSubscription listen(Function handler) => _stream.listen(handler);
   static void refresh() {
-	  _calculate();
+	  //_calculate();
 	  _fire(_output);
   }
 
+  static void calculate() => _calculate();
+
   static void _fire(String data) {
-    _controller.add(_output);
-    _controller.add(_results);
+    _resultsModel.display = _output;
+	_resultsModel.results = _results;
+	print("Got" + _output);
   }
 
+  static set resultsModel(ResultsModel rm) {_resultsModel = rm; }
   static String get _output => _result == null ? _equation : _result;
   //static Map<int, double> get _results => _results;
 
@@ -99,6 +105,7 @@ class Processor extends ChangeNotifier {
   static void _clear() {
     _valA = _valB = '0';
     _operator = _result = null;
+	_results.clear();
   }
 
   static void _rms() {
@@ -118,9 +125,12 @@ class Processor extends ChangeNotifier {
   }
 
   static void _calculate() {
-    if (_operator == null || _valB == '0') {
+    if (_valA == '0') {
       return;
     }
+
+	// Clear the results map.
+	_results.clear();
 
     // If calculating from RMS voltages...
     if (_isRMS) {
@@ -130,7 +140,7 @@ class Processor extends ChangeNotifier {
         });
       } else {
         impedances.forEach((e) {
-          _results.putIfAbsent(e, () => -_findRMSFromP(double.parse(_valA), e));
+          _results.putIfAbsent(e, () => _findRMSFromP(double.parse(_valA), e));
         });
       }
     } else {
@@ -141,19 +151,11 @@ class Processor extends ChangeNotifier {
       } else {
         impedances.forEach((e) {
           _results.putIfAbsent(
-              e, () => -_findPeakFromP(double.parse(_valA), e));
+              e, () => _findPeakFromP(double.parse(_valA), e));
         });
       }
     }
 
-/*     double result = 0.0; //TODO Result goes here
-    String str = result.toString();
-
-    while ((str.contains('.') && str.endsWith('0')) || str.endsWith('.')) {
-      str = str.substring(0, str.length - 1);
-    }
-
-    _result = str; */
     refresh();
   }
 

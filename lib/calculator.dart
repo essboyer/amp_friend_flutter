@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calculator_demo/display.dart';
-import 'package:flutter_calculator_demo/key-controller.dart';
-import 'package:flutter_calculator_demo/key-pad.dart';
-import 'package:flutter_calculator_demo/processor.dart';
+import 'package:amp_friend_flutter/display.dart';
+import 'package:amp_friend_flutter/key-controller.dart';
+import 'package:amp_friend_flutter/key-pad.dart';
+import 'package:amp_friend_flutter/processor.dart';
 
 class Calculator extends StatefulWidget {
 
@@ -14,13 +14,13 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
 
-	String _output;
-	Map<int, double> _results = {};
-
 	@override
 	void initState() {
-		KeyController.listen((event) => Processor.process(event));
-		Processor.listen((data) => setState(() { _output = data; }));
+		KeyController.listen((event) {
+			Processor.process(event);
+			Processor.calculate();
+		});
+		//Processor.listen((data) => setState(() { _output = data; }));
 		Processor.refresh();
 		super.initState();
 	}
@@ -44,7 +44,7 @@ class _CalculatorState extends State<Calculator> {
 			backgroundColor: Color.fromARGB(196, 32, 64, 96),
 			body: Column(mainAxisAlignment: MainAxisAlignment.center,
 				children: <Widget>[
-					Display(value: _output, height: displayHeight, results: _results),
+					Display(height: displayHeight),
 					KeyPad()
 				]
 			),

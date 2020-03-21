@@ -1,41 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:amp_friend_flutter/results-model.dart';
+import 'package:provider/provider.dart';
+
+import 'processor.dart';
 
 class ResultsBuilder extends StatelessWidget {
-	ResultsBuilder(this.results);
-	final Map<int, double> results;
-
   @override
   Widget build(BuildContext context) {
-	  TextStyle resultStyle = Theme.of(context)
+    final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
+
+    TextStyle resultStyle = Theme.of(context)
         .textTheme
         .headline6
         .copyWith(color: Colors.white, fontWeight: FontWeight.w200);
 
-		List<Widget> children = [];
+    List<Widget> children = [];
 
-		results.forEach((key, value) {
-			children.add(Text(key.toString() + " \u03A9", style: resultStyle, textAlign: TextAlign.right));
-			children.add(Text(value.toString(), style: resultStyle, textAlign: TextAlign.right));
-		});
+    _resultsModel.results.forEach((key, value) {
+      children.add(Column(
+        children: <Widget>[
+          Text(key.toString() + " \u03A9",
+              style: resultStyle, textAlign: TextAlign.right),
+          Text(value.toStringAsFixed(2), style: resultStyle, textAlign: TextAlign.right)
+        ],
+      ));
+    });
 
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: children);
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: children);
   }
-	
 }
 
 class Display extends StatefulWidget {
-  Display({Key key, this.value, this.results, this.height}) : super(key: key);
+  Display({Key key, this.height}) : super(key: key);
 
-  final String value;
   final double height;
-  final Map<int, double> results;
 
   @override
   _DisplayState createState() => _DisplayState();
 }
 
 class _DisplayState extends State<Display> {
-  String get _output => widget.value.toString();
+  //String get _output => widget.resultsModel.display;
 
   double get _margin => (widget.height / 10);
 
@@ -44,6 +50,9 @@ class _DisplayState extends State<Display> {
 
   @override
   Widget build(BuildContext context) {
+    final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
+    Processor.resultsModel = _resultsModel;
+
     TextStyle inputStyle = Theme.of(context)
         .textTheme
         .headline4
@@ -52,18 +61,16 @@ class _DisplayState extends State<Display> {
     return Container(
         //padding: EdgeInsets.only(top: _margin, bottom: _margin),
         //constraints: BoxConstraints.expand(height: height),
-			child: Container(
-				padding: EdgeInsets.fromLTRB(32, 32, 32, 32),
-				//constraints: BoxConstraints.expand(height: height - (_margin)),
-				decoration: BoxDecoration(gradient: _gradient),
-				child: Column(children: <Widget>[
-					Row(mainAxisAlignment: MainAxisAlignment.end,
-						children: <Widget>[
-						Text(_output, style: inputStyle, textAlign: TextAlign.right)
-					]),
-					ResultsBuilder(widget.results)
-				])
-			)
-		);
-	}
+        child: Container(
+            padding: EdgeInsets.fromLTRB(32, 32, 32, 32),
+            //constraints: BoxConstraints.expand(height: height - (_margin)),
+            decoration: BoxDecoration(gradient: _gradient),
+            child: Column(children: <Widget>[
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                Text(_resultsModel.display,
+                    style: inputStyle, textAlign: TextAlign.right)
+              ]),
+              ResultsBuilder()
+            ])));
+  }
 }

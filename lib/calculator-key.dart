@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calculator_demo/key-controller.dart';
-import 'package:flutter_calculator_demo/key-symbol.dart';
+import 'package:amp_friend_flutter/key-controller.dart';
+import 'package:amp_friend_flutter/key-symbol.dart';
 
 abstract class Keys {
   static KeySymbol rms = KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
   static KeySymbol voltage = KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
 
-  static KeySymbol clear = KeySymbol('C', keyType: KeyType.CLEAR);
+  static KeySymbol clear = KeySymbol('Del', keyType: KeyType.CLEAR);
   static KeySymbol decimal = KeySymbol('.', keyType: KeyType.DECIMAL);
 
   static KeySymbol zero = KeySymbol('0');
@@ -35,15 +35,21 @@ class CalculatorKey extends StatefulWidget {
 
 class CalculatorKeyState extends State<CalculatorKey> {
   bool toggled = false;
+  bool _isLongPressed = false;
 
-  dynamic _fire(CalculatorKeyState key) => KeyController.fire(KeyEvent(widget));
+  dynamic _fire(CalculatorKeyState key) {
+	  KeyEvent ke = KeyEvent(widget);
+	  ke.isLongPressed = _isLongPressed;
+	  KeyController.fire(ke);
+  }
+
   Color get color {
     switch (widget.symbol.keyType) {
       case KeyType.CLEAR:
         return Colors.red;
       case KeyType.FUNCTION:
 	  	if (toggled) {
-		  return Color.fromARGB(255, 96, 96, 96);
+		  return Colors.blue;
 		}
         return Colors.green;
 
@@ -77,6 +83,15 @@ class CalculatorKeyState extends State<CalculatorKey> {
               if (widget.symbol.keyType == KeyType.FUNCTION) {
 				  setState((){
 					  toggled = !toggled;
+				  });
+			  }
+
+              return _fire(this);
+            },
+			onLongPress: () {
+              if (widget.symbol.keyType == KeyType.CLEAR) {
+				  setState((){
+					  _isLongPressed = true;
 				  });
 			  }
 

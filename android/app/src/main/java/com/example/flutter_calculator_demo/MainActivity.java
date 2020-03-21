@@ -1,4 +1,4 @@
-package com.example.flutter_calculator_demo;
+package com.example.amp_friend_flutter;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

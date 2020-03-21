@@ -1,4 +1,4 @@
-# flutter_calculator_demo
+# amp_friend_flutter
 Example project demonstrating how to build a calculator app in Flutter
 
 ![](preview.gif)

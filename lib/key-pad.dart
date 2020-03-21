@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_calculator_demo/calculator-key.dart';
+import 'package:amp_friend_flutter/calculator-key.dart';
 
 class KeyPad extends StatelessWidget {
 
@@ -42,7 +42,7 @@ class KeyPad extends StatelessWidget {
 						CalculatorKey(symbol: Keys.zero),
 						CalculatorKey(symbol: Keys.decimal),
 					]
-				)
+				),
 			],
 		);
 	}

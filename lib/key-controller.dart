@@ -1,10 +1,17 @@
 import 'dart:async';
-import 'package:flutter_calculator_demo/calculator-key.dart';
+import 'package:amp_friend_flutter/calculator-key.dart';
 
 class KeyEvent {
 
 	KeyEvent(this.key);
 	final CalculatorKey key;
+	bool _isLongPressed = false;
+
+	set isLongPressed(bool ilp) {
+		_isLongPressed = ilp;
+	}
+	get isLongPressed => _isLongPressed;
+
 }
 
 abstract class KeyController {
