@@ -3,10 +3,8 @@ import 'package:amp_friend_flutter/key-controller.dart';
 import 'package:amp_friend_flutter/key-symbol.dart';
 
 abstract class Keys {
-  static KeySymbol rms =
-      KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
-  static KeySymbol voltage =
-      KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
+  static KeySymbol rms = KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
+  static KeySymbol voltage = KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
 
   static KeySymbol clear = KeySymbol('Del', keyType: KeyType.CLEAR);
   static KeySymbol decimal = KeySymbol('.', keyType: KeyType.DECIMAL);

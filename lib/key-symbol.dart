@@ -1,4 +1,4 @@
-enum KeyType { CLEAR, FUNCTION, OPERATOR, INTEGER, DECIMAL }
+enum KeyType { CLEAR, FUNCTION, INTEGER, DECIMAL }
 
 class KeySymbol {
   KeySymbol(this.value, {this.keyType = KeyType.INTEGER, this.altText});

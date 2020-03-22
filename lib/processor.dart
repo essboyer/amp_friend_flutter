@@ -36,12 +36,7 @@ class Processor {
   }
 
   static String get _output => _result == null ? _equation : _result;
-  //static Map<int, double> get _results => _results;
-
-  static String get _equation =>
-      _valA +
-      (_operator != null ? ' ' + _operator.value : '') +
-      (_valB != '0' ? ' ' + _valB : '');
+  static String get _equation => _valA + (_valB != '0' ? ' ' + _valB : '');
 
   static dispose() => _controller.close();
 
@@ -52,9 +47,6 @@ class Processor {
       case KeyType.FUNCTION:
       case KeyType.CLEAR:
         return handleFunction(key, event);
-
-      case KeyType.OPERATOR:
-        return handleOperator(key);
 
       case KeyType.INTEGER:
         return handleInteger(key);
@@ -81,31 +73,30 @@ class Processor {
     refresh();
   }
 
-  static void handleOperator(CalculatorKey key) {
-    if (_valA == '0') {
-      return;
-    }
-    if (_result != null) {
-      _condense();
-    }
-
-    _operator = key.symbol;
-    refresh();
-  }
-
   static void handleInteger(CalculatorKey key) {
     String val = key.symbol.value;
-    if (_operator == null) {
-      _valA = (_valA == '0') ? val : _valA + val;
-    } else {
-      _valB = (_valB == '0') ? val : _valB + val;
-    }
+	int pos = _valA.indexOf('.');
+
+	// Force not more than 3 digits before decimal
+	if (pos == -1 && _valA.length == 3)
+		return;
+
+	// Force not more than 3 decimal places on input.
+	if (pos > -1 && pos == (_valA.length - 4))
+		return;
+
+    _valA = (_valA == '0') ? val : _valA + val;
+   
     refresh();
   }
 
   static void _clear(CalculatorKey key, KeyEvent keyEvent) {
     if (!keyEvent.isLongPressed && _valA != "0") {
-		_valA = _valA.substring(0, _valA.length - 1);
+      if (_valA.length > 1)
+        _valA = _valA.substring(0, _valA.length - 1);
+      else
+        _valA = "0";
+		_results.clear();
     } else {
       _valA = _valB = '0';
       _operator = _result = null;

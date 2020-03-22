@@ -9,19 +9,24 @@ class ResultsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
 
-    TextStyle resultStyle = Theme.of(context)
+    TextStyle resultStyle1 = Theme.of(context)
         .textTheme
         .headline6
-        .copyWith(color: Colors.white, fontWeight: FontWeight.w200);
+        .copyWith(color: Colors.white, fontWeight: FontWeight.w800);
+
+   TextStyle resultStyle2 = Theme.of(context)
+        .textTheme
+        .headline6
+        .copyWith(color: Colors.white, fontWeight: FontWeight.w500);
 
     List<Widget> children = [];
 
     _resultsModel.results.forEach((key, value) {
-      children.add(Column(
+      children.add(Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Text(key.toString() + " \u03A9",
-              style: resultStyle, textAlign: TextAlign.right),
-          Text(value.toStringAsFixed(2), style: resultStyle, textAlign: TextAlign.right)
+              style: resultStyle1, textAlign: TextAlign.right),
+          Text(value.toStringAsFixed(2), style: resultStyle2, textAlign: TextAlign.right)
         ],
       ));
     });
