@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class ResultsModel extends ChangeNotifier {
   String _display = "0";
-  Map<int, double> _results = {};
+  Map<int, double> _results = {2:0, 4:0, 8:0, 16:0};
   bool _isRMS = true;
   bool _isVoltage = true;
 

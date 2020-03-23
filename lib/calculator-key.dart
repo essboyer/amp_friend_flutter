@@ -72,14 +72,17 @@ class CalculatorKeyState extends State<CalculatorKey> {
   @override
   Widget build(BuildContext context) {
     final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
-    double size = (MediaQuery.of(context).size.width) / 3;
+	Size s = MediaQuery.of(context).size;
+	double totalArea = s.height + s.width;
+	double buttonArea = totalArea / 9; 
+    double size = buttonArea;
 
     TextStyle style =
         Theme.of(context).textTheme.headline4.copyWith(color: Colors.white);
 
     return Container(
         width: (widget.symbol == Keys.zero) ? (size * 2) : size,
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(10),
         height: size - 10,
         child: RaisedButton(
             shape:
