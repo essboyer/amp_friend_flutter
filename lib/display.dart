@@ -22,32 +22,28 @@ class ResultsBuilder extends StatelessWidget {
     List<Widget> children = [];
 
     _resultsModel.results.forEach((key, value) {
-      children.add(Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children.add(Column(
         children: <Widget>[
           Text(key.toString() + " \u03A9",
-              style: resultStyle1, textAlign: TextAlign.right),
-          Text(value.toStringAsFixed(2), style: resultStyle2, textAlign: TextAlign.right)
+              style: resultStyle1, textAlign: TextAlign.start),
+          Text(value.toStringAsFixed(1) + (_resultsModel.isVoltage ? "V" : "W"), style: resultStyle2, textAlign: TextAlign.start)
         ],
       ));
     });
 
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: children);
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: children);
   }
 }
 
 class Display extends StatefulWidget {
-  Display({Key key, this.height}) : super(key: key);
-
-  final double height;
+  Display({Key key}) : super(key: key);
 
   @override
   _DisplayState createState() => _DisplayState();
 }
 
 class _DisplayState extends State<Display> {
-
-  //double get _margin => (widget.height / 10);
 
   final LinearGradient _gradient =
       const LinearGradient(colors: [Colors.black26, Colors.black45]);
@@ -64,16 +60,13 @@ class _DisplayState extends State<Display> {
         .copyWith(color: Colors.white, fontWeight: FontWeight.w400);
 
     return Container(
-        //padding: EdgeInsets.only(top: _margin, bottom: _margin),
-        //constraints: BoxConstraints.expand(height: height),
+		margin: EdgeInsets.only(top: 10),
         child: Container(
-            padding: EdgeInsets.fromLTRB(32, 32, 32, 32),
-            //constraints: BoxConstraints.expand(height: height - (_margin)),
+            padding: EdgeInsets.fromLTRB(10, 32, 10, 32),
             decoration: BoxDecoration(gradient: _gradient),
             child: Column(children: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-                Text(_resultsModel.display,
-                    style: inputStyle, textAlign: TextAlign.right),
+              Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
+                Text(_resultsModel.display, style: inputStyle, textAlign: TextAlign.right),
 				Text(" " + inputText, textAlign: TextAlign.end, style: TextStyle(color: Colors.white), )
               ]),
               ResultsBuilder()

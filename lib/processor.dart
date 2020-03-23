@@ -97,10 +97,10 @@ class Processor {
         _valA = _valA.substring(0, _valA.length - 1);
       else
         _valA = "0";
-		_results.clear();
+		_results = {2:0, 4:0, 8:0, 16:0};
     } else {
       _valA = _valB = '0';
-      _results.clear();
+      _results = {2:0, 4:0, 8:0, 16:0};
     }
   }
 
