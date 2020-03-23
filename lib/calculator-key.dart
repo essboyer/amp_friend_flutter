@@ -1,10 +1,14 @@
+import 'package:amp_friend_flutter/results-model.dart';
 import 'package:flutter/material.dart';
 import 'package:amp_friend_flutter/key-controller.dart';
 import 'package:amp_friend_flutter/key-symbol.dart';
+import 'package:provider/provider.dart';
 
 abstract class Keys {
-  static KeySymbol rms = KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
-  static KeySymbol voltage = KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
+  static KeySymbol rms =
+      KeySymbol('RMS', keyType: KeyType.FUNCTION, altText: 'P2P');
+  static KeySymbol voltage =
+      KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
 
   static KeySymbol clear = KeySymbol('Del', keyType: KeyType.CLEAR);
   static KeySymbol decimal = KeySymbol('.', keyType: KeyType.DECIMAL);
@@ -67,7 +71,9 @@ class CalculatorKeyState extends State<CalculatorKey> {
 
   @override
   Widget build(BuildContext context) {
+    final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
     double size = (MediaQuery.of(context).size.width) / 3;
+
     TextStyle style =
         Theme.of(context).textTheme.headline4.copyWith(color: Colors.white);
 
@@ -82,6 +88,7 @@ class CalculatorKeyState extends State<CalculatorKey> {
             elevation: 4,
             child: Text(label, style: style),
             onPressed: () {
+              // Hack to force back to delete mode after using clear mode
               if (widget.symbol.keyType == KeyType.CLEAR) {
                 isLongPressed = false;
               }
@@ -89,6 +96,11 @@ class CalculatorKeyState extends State<CalculatorKey> {
               if (widget.symbol.keyType == KeyType.FUNCTION) {
                 setState(() {
                   toggled = !toggled;
+                  if (widget.symbol.value == "RMS") {
+                    _resultsModel.isRMS = !toggled;
+                  } else if (widget.symbol.value == "V") {
+					_resultsModel.isVoltage = !toggled;
+				  }
                 });
               }
 

@@ -46,9 +46,8 @@ class Display extends StatefulWidget {
 }
 
 class _DisplayState extends State<Display> {
-  //String get _output => widget.resultsModel.display;
 
-  double get _margin => (widget.height / 10);
+  //double get _margin => (widget.height / 10);
 
   final LinearGradient _gradient =
       const LinearGradient(colors: [Colors.black26, Colors.black45]);
@@ -56,6 +55,7 @@ class _DisplayState extends State<Display> {
   @override
   Widget build(BuildContext context) {
     final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
+	final String inputText = (_resultsModel.isVoltage ? (_resultsModel.isRMS ? "Vrms" : "V") : "W");
     Processor.resultsModel = _resultsModel;
 
     TextStyle inputStyle = Theme.of(context)
@@ -73,7 +73,8 @@ class _DisplayState extends State<Display> {
             child: Column(children: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
                 Text(_resultsModel.display,
-                    style: inputStyle, textAlign: TextAlign.right)
+                    style: inputStyle, textAlign: TextAlign.right),
+				Text(" " + inputText, textAlign: TextAlign.end, style: TextStyle(color: Colors.white), )
               ]),
               ResultsBuilder()
             ])));

@@ -6,7 +6,6 @@ import 'package:amp_friend_flutter/key-symbol.dart';
 import 'package:amp_friend_flutter/results-model.dart';
 
 class Processor {
-  static KeySymbol _operator;
   static String _valA = '0';
   static String _valB = '0';
   static String _result;
@@ -18,8 +17,8 @@ class Processor {
 
   static StreamController _controller = StreamController();
   static Stream get _stream => _controller.stream;
-
   static StreamSubscription listen(Function handler) => _stream.listen(handler);
+
   static void refresh() {
     _fire(_output);
   }
@@ -37,6 +36,8 @@ class Processor {
 
   static String get _output => _result == null ? _equation : _result;
   static String get _equation => _valA + (_valB != '0' ? ' ' + _valB : '');
+  static bool get isRMS => _isRMS;
+  static bool get isVoltage => _isVoltage;
 
   static dispose() => _controller.close();
 
@@ -99,7 +100,6 @@ class Processor {
 		_results.clear();
     } else {
       _valA = _valB = '0';
-      _operator = _result = null;
       _results.clear();
     }
   }
@@ -157,7 +157,7 @@ class Processor {
   static void _condense() {
     _valA = _result;
     _valB = '0';
-    _result = _operator = null;
+    _result = null;
   }
 
   static double _findPFromRMS(double rmsVolts, int load) {
