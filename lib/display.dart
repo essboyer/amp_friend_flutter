@@ -16,7 +16,7 @@ class ResultsBuilder extends StatelessWidget {
 
    TextStyle resultStyle2 = Theme.of(context)
         .textTheme
-        .headline6
+        .subtitle1
         .copyWith(color: Colors.white, fontWeight: FontWeight.w500);
 
     List<Widget> children = [];
@@ -62,7 +62,7 @@ class _DisplayState extends State<Display> {
     return Container(
 		margin: EdgeInsets.only(top: 10),
         child: Container(
-            padding: EdgeInsets.fromLTRB(10, 32, 10, 32),
+            padding: EdgeInsets.fromLTRB(10, 32, 10, 2),
             decoration: BoxDecoration(gradient: _gradient),
             child: Column(children: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
