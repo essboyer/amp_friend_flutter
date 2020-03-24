@@ -1,7 +1,7 @@
-import 'package:amp_friend_flutter/results-model.dart';
-import 'package:flutter/material.dart';
 import 'package:amp_friend_flutter/key-controller.dart';
 import 'package:amp_friend_flutter/key-symbol.dart';
+import 'package:amp_friend_flutter/results-model.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract class Keys {

@@ -13,7 +13,6 @@ class ResultsModel extends ChangeNotifier {
 
   set display(String value) {
     _display = value;
-	print("I got called!");
     notifyListeners();
   }
 
