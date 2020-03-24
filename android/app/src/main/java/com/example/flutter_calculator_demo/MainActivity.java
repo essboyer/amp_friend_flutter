@@ -1,4 +1,4 @@
-package com.example.amp_friend_flutter;
+package com.studioboytimes.amp_friend_flutter;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
