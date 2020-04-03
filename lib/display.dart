@@ -14,7 +14,7 @@ class ResultsBuilder extends StatelessWidget {
         .headline6
         .copyWith(color: Colors.white, fontWeight: FontWeight.w800);
 
-   TextStyle resultStyle2 = Theme.of(context)
+    TextStyle resultStyle2 = Theme.of(context)
         .textTheme
         .subtitle1
         .copyWith(color: Colors.white, fontWeight: FontWeight.w500);
@@ -26,7 +26,8 @@ class ResultsBuilder extends StatelessWidget {
         children: <Widget>[
           Text(key.toString() + " \u03A9",
               style: resultStyle1, textAlign: TextAlign.start),
-          Text(value.toStringAsFixed(1) + (_resultsModel.isVoltage ? "V" : "W"), style: resultStyle2, textAlign: TextAlign.start)
+          Text(value.toStringAsFixed(1) + (_resultsModel.isVoltage ? "V" : "W"),
+              style: resultStyle2, textAlign: TextAlign.start)
         ],
       ));
     });
@@ -44,14 +45,14 @@ class Display extends StatefulWidget {
 }
 
 class _DisplayState extends State<Display> {
-
   final LinearGradient _gradient =
       const LinearGradient(colors: [Colors.black26, Colors.black45]);
 
   @override
   Widget build(BuildContext context) {
     final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
-	final String inputText = (_resultsModel.isVoltage ? (_resultsModel.isRMS ? "Vrms" : "V") : "W");
+    final String inputText =
+        (_resultsModel.isVoltage ? (_resultsModel.isRMS ? "Vrms" : "V") : "W");
     Processor.resultsModel = _resultsModel;
 
     TextStyle inputStyle = Theme.of(context)
@@ -59,17 +60,29 @@ class _DisplayState extends State<Display> {
         .headline4
         .copyWith(color: Colors.white, fontWeight: FontWeight.w400);
 
-    return Container(
-		margin: EdgeInsets.only(top: 10),
-        child: Container(
-            padding: EdgeInsets.fromLTRB(10, 32, 10, 2),
-            decoration: BoxDecoration(gradient: _gradient),
-            child: Column(children: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
-                Text(_resultsModel.display, style: inputStyle, textAlign: TextAlign.right),
-				Text(" " + inputText, textAlign: TextAlign.end, style: TextStyle(color: Colors.white), )
-              ]),
-              ResultsBuilder()
-            ])));
+    return Expanded(
+      flex: 4,
+      child: Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Container(
+              padding: EdgeInsets.fromLTRB(20, 52, 10, 2),
+              decoration: BoxDecoration(gradient: _gradient),
+              child: Column(children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(_resultsModel.display,
+                          style: inputStyle, textAlign: TextAlign.right),
+                      Text(
+                        " " + inputText,
+                        textAlign: TextAlign.end,
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ]),
+					SizedBox( height: 20),
+                ResultsBuilder()
+              ]))),
+    );
   }
 }

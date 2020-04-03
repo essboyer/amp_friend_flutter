@@ -80,43 +80,46 @@ class CalculatorKeyState extends State<CalculatorKey> {
     TextStyle style =
         Theme.of(context).textTheme.headline4.copyWith(color: Colors.white);
 
-    return Container(
-        width: (widget.symbol == Keys.zero) ? (size * 2) : size,
-        padding: EdgeInsets.all(10),
-        height: size - 10,
-        child: RaisedButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-            color: color,
-            elevation: 4,
-            child: Text(label, style: style),
-            onPressed: () {
-              // Hack to force back to delete mode after using clear mode
-              if (widget.symbol.keyType == KeyType.CLEAR) {
-                isLongPressed = false;
-              }
+    return Expanded(
+		flex: (widget.symbol == Keys.zero) ? 2 : 1,
+		  child: Container(
+          padding: EdgeInsets.all(10),
+          //height: size - 50,
+          child: RaisedButton(
+			  
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+              color: color,
+              elevation: 4,
+              child: Text(label, style: style),
+              onPressed: () {
+                // Hack to force back to delete mode after using clear mode
+                if (widget.symbol.keyType == KeyType.CLEAR) {
+                  isLongPressed = false;
+                }
 
-              if (widget.symbol.keyType == KeyType.FUNCTION) {
-                setState(() {
-                  toggled = !toggled;
-                  if (widget.symbol.value == "RMS") {
-                    _resultsModel.isRMS = !toggled;
-                  } else if (widget.symbol.value == "V") {
+                if (widget.symbol.keyType == KeyType.FUNCTION) {
+                  setState(() {
+                    toggled = !toggled;
+                    if (widget.symbol.value == "RMS") {
+                      _resultsModel.isRMS = !toggled;
+                    } else if (widget.symbol.value == "V") {
 					_resultsModel.isVoltage = !toggled;
 				  }
-                });
-              }
+                  });
+                }
 
-              return _fire(this);
-            },
-            onLongPress: () {
-              if (widget.symbol.keyType == KeyType.CLEAR) {
-                setState(() {
-                  isLongPressed = true;
-                });
-              }
+                return _fire(this);
+              },
+              onLongPress: () {
+                if (widget.symbol.keyType == KeyType.CLEAR) {
+                  setState(() {
+                    isLongPressed = true;
+                  });
+                }
 
-              return _fire(this);
-            }));
+                return _fire(this);
+              })),
+    );
   }
 }
