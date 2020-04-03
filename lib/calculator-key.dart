@@ -75,20 +75,18 @@ class CalculatorKeyState extends State<CalculatorKey> {
 	Size s = MediaQuery.of(context).size;
 	double totalArea = s.height + s.width;
 	double buttonArea = totalArea / 9; 
-    double size = buttonArea;
+    double size = buttonArea -20;
 
     TextStyle style =
-        Theme.of(context).textTheme.headline4.copyWith(color: Colors.white);
+        Theme.of(context).textTheme.headline3.copyWith(color: Colors.white);
 
     return Expanded(
 		flex: (widget.symbol == Keys.zero) ? 2 : 1,
 		  child: Container(
           padding: EdgeInsets.all(10),
-          //height: size - 50,
           child: RaisedButton(
-			  
               shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               color: color,
               elevation: 4,
               child: Text(label, style: style),
