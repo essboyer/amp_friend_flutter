@@ -75,7 +75,7 @@ class CalculatorKeyState extends State<CalculatorKey> {
 	Size s = MediaQuery.of(context).size;
 	double totalArea = s.height + s.width;
 	double buttonArea = totalArea / 9; 
-    double size = buttonArea -20;
+    double size = buttonArea - 20;
 
     TextStyle style =
         Theme.of(context).textTheme.headline3.copyWith(color: Colors.white);
@@ -83,12 +83,14 @@ class CalculatorKeyState extends State<CalculatorKey> {
     return Expanded(
 		flex: (widget.symbol == Keys.zero) ? 2 : 1,
 		  child: Container(
+			  height: size,
+			  width: size,
           padding: EdgeInsets.all(10),
           child: RaisedButton(
               shape:
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               color: color,
-              elevation: 4,
+              elevation: 8,
               child: Text(label, style: style),
               onPressed: () {
                 // Hack to force back to delete mode after using clear mode

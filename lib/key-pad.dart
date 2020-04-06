@@ -6,7 +6,7 @@ class KeyPad extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Expanded(
-		flex: 7,
+		flex: 5,
         child: Column(
 			mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

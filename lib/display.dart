@@ -28,11 +28,11 @@ class _DisplayState extends State<Display> {
         .copyWith(color: Colors.white, fontWeight: FontWeight.w400);
 
     return Expanded(
-      flex: 3,
+      flex: 2,
       child: Container(
           margin: EdgeInsets.only(top: 10),
           child: Container(
-              padding: EdgeInsets.fromLTRB(20, 75, 10, 2),
+              padding: EdgeInsets.fromLTRB(20, 50, 10, 2),
               decoration: BoxDecoration(gradient: _gradient),
               child: Column(children: <Widget>[
                 Row(
