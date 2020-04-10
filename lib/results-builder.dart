@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'results-model.dart';
 
@@ -18,16 +19,18 @@ class ResultsBuilder extends StatelessWidget {
         .headline5
         .copyWith(color: Colors.white, fontWeight: FontWeight.w500);
 
+	final f = new NumberFormat("###,###.#");
+
     final List<Widget> children = [];
-	final Row row1 = new Row(children: [], mainAxisAlignment: MainAxisAlignment.spaceEvenly,);
-	final Row row2 = new Row(children: [], mainAxisAlignment: MainAxisAlignment.spaceEvenly,);
+	final Row row1 = new Row(children: [], mainAxisAlignment: MainAxisAlignment.spaceBetween);
+	final Row row2 = new Row(children: [], mainAxisAlignment: MainAxisAlignment.spaceBetween);
 
     _resultsModel.results.forEach((key, value) {
 		final Column col = Column(
         children: <Widget>[
           Text(key.toString() + " \u03A9",
               style: resultStyle1, textAlign: TextAlign.start),
-          Text(value.toStringAsFixed(1) + (_resultsModel.isVoltage ? "W" : "V"),
+          Text(f.format(value) + (_resultsModel.isVoltage ? "W" : "V"),
               style: resultStyle2, textAlign: TextAlign.start)
         ],
       );
