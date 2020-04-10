@@ -4,14 +4,8 @@ import 'results-builder.dart';
 import 'results-model.dart';
 import 'processor.dart';
 
-class Display extends StatefulWidget {
-  Display({Key key}) : super(key: key);
+class Display extends StatelessWidget {
 
-  @override
-  _DisplayState createState() => _DisplayState();
-}
-
-class _DisplayState extends State<Display> {
   final LinearGradient _gradient =
       const LinearGradient(colors: [Colors.black26, Colors.black45]);
 
@@ -22,7 +16,7 @@ class _DisplayState extends State<Display> {
         (_resultsModel.isVoltage ? (_resultsModel.isRMS ? "Vrms" : "V") : "W");
     Processor.resultsModel = _resultsModel;
 
-    TextStyle inputStyle = Theme.of(context)
+    final TextStyle inputStyle = Theme.of(context)
         .textTheme
         .headline2
         .copyWith(color: Colors.white, fontWeight: FontWeight.w400);
@@ -41,15 +35,14 @@ class _DisplayState extends State<Display> {
                     children: <Widget>[
                       Text(_resultsModel.display,
                           style: inputStyle, textAlign: TextAlign.right),
-
                       Text(
                         " " + inputText,
                         textAlign: TextAlign.end,
                         style: TextStyle(color: Colors.white),
                       )
                     ]),
-					SizedBox( height: 30),
-                	ResultsBuilder()
+                SizedBox(height: 30),
+                ResultsBuilder()
               ]))),
     );
   }
