@@ -49,7 +49,7 @@ class _DisplayState extends State<Display> {
                       )
                     ]),
 					SizedBox( height: 30),
-                ResultsBuilder()
+                	ResultsBuilder()
               ]))),
     );
   }

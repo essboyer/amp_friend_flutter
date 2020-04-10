@@ -74,7 +74,7 @@ class CalculatorKeyState extends State<CalculatorKey> {
     final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
 	Size s = MediaQuery.of(context).size;
 	double totalArea = s.height + s.width;
-	double buttonArea = totalArea / 9; 
+	double buttonArea = totalArea / 11; 
     double size = buttonArea - 20;
 
     TextStyle style =

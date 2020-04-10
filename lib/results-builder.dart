@@ -8,30 +8,44 @@ class ResultsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final ResultsModel _resultsModel = Provider.of<ResultsModel>(context);
 
-    TextStyle resultStyle1 = Theme.of(context)
+    final TextStyle resultStyle1 = Theme.of(context)
         .textTheme
-        .headline6
+        .headline4
         .copyWith(color: Colors.white, fontWeight: FontWeight.w800);
 
-    TextStyle resultStyle2 = Theme.of(context)
+    final TextStyle resultStyle2 = Theme.of(context)
         .textTheme
-        .subtitle1
+        .headline5
         .copyWith(color: Colors.white, fontWeight: FontWeight.w500);
 
-    List<Widget> children = [];
+    final List<Widget> children = [];
+	final Row row1 = new Row(children: [], mainAxisAlignment: MainAxisAlignment.spaceEvenly,);
+	final Row row2 = new Row(children: [], mainAxisAlignment: MainAxisAlignment.spaceEvenly,);
 
     _resultsModel.results.forEach((key, value) {
-      children.add(Column(
+		final Column col = Column(
         children: <Widget>[
           Text(key.toString() + " \u03A9",
               style: resultStyle1, textAlign: TextAlign.start),
-          Text(value.toStringAsFixed(1) + (_resultsModel.isVoltage ? "V" : "W"),
+          Text(value.toStringAsFixed(1) + (_resultsModel.isVoltage ? "W" : "V"),
               style: resultStyle2, textAlign: TextAlign.start)
         ],
-      ));
+      );
+
+	  if (key == 2 || key == 4) {
+		  row1.children.add(col);
+	  } else {
+		  row2.children.add(col);
+	  }
     });
 
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: children);
+	final Column bigCol = Column(children: [], crossAxisAlignment: CrossAxisAlignment.center,);
+	bigCol.children.add(row1);
+	bigCol.children.add(SizedBox(height: 20));
+	bigCol.children.add(row2);
+	children.add(bigCol);
+
+
+    return bigCol;
   }
 }
