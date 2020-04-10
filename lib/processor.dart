@@ -78,12 +78,12 @@ class Processor {
     String val = key.symbol.value;
 	int pos = _valA.indexOf('.');
 
-	// Force not more than 3 digits before decimal
-	if (pos == -1 && _valA.length == 3)
+	// Force not more than 4 digits before decimal
+	if (pos == -1 && _valA.length == 4)
 		return;
 
-	// Force not more than 3 decimal places on input.
-	if (pos > -1 && pos == (_valA.length - 4))
+	// Force not more than 4 decimal places on input.
+	if (pos > -1 && pos == (_valA.length - 5))
 		return;
 
     _valA = (_valA == '0') ? val : _valA + val;
