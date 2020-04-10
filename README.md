@@ -8,6 +8,9 @@ Simply measure the output of your amplifier in volts, either RMS (with most mult
 You can also type in the wattage desired, and it will show you the voltage you should expect.
 
 ## Getting Started
+
+Download on Google Play, or:
+
 To build and run this project:
 
 1. Get Flutter [here](https://flutter.dev) if you don't already have it
