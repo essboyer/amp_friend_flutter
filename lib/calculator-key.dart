@@ -1,6 +1,7 @@
 import 'package:amp_friend_flutter/key-controller.dart';
 import 'package:amp_friend_flutter/key-symbol.dart';
 import 'package:amp_friend_flutter/results-model.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,7 @@ abstract class Keys {
   static KeySymbol voltage =
       KeySymbol('V', keyType: KeyType.FUNCTION, altText: 'W');
 
-  static KeySymbol clear = KeySymbol('Del', keyType: KeyType.CLEAR);
+  static KeySymbol clear = KeySymbol('C/CE', keyType: KeyType.CLEAR);
   static KeySymbol decimal = KeySymbol('.', keyType: KeyType.DECIMAL);
 
   static KeySymbol zero = KeySymbol('0');
@@ -91,7 +92,7 @@ class CalculatorKeyState extends State<CalculatorKey> {
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               color: color,
               elevation: 8,
-              child: Text(label, style: style),
+              child: AutoSizeText(label, style: style),
               onPressed: () {
                 // Hack to force back to delete mode after using clear mode
                 if (widget.symbol.keyType == KeyType.CLEAR) {

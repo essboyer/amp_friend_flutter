@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'results-builder.dart';
@@ -33,9 +34,9 @@ class Display extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Text(_resultsModel.display,
+                      AutoSizeText(_resultsModel.display,
                           style: inputStyle, textAlign: TextAlign.right),
-                      Text(
+                      AutoSizeText(
                         " " + inputText,
                         textAlign: TextAlign.end,
                         style: TextStyle(color: Colors.white),

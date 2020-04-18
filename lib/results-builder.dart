@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,9 +29,9 @@ class ResultsBuilder extends StatelessWidget {
     _resultsModel.results.forEach((key, value) {
 		final Column col = Column(
         children: <Widget>[
-          Text(key.toString() + " \u03A9",
+          AutoSizeText(key.toString() + " \u03A9",
               style: resultStyle1, textAlign: TextAlign.start),
-          Text(f.format(value) + (_resultsModel.isVoltage ? "W" : "V"),
+          AutoSizeText(f.format(value) + (_resultsModel.isVoltage ? "W" : "V"),
               style: resultStyle2, textAlign: TextAlign.start)
         ],
       );
